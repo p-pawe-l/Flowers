@@ -1,0 +1,854 @@
+* {
+        box-sizing: border-box;
+}
+
+body {
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(to top, #1e1d1d 0%, #282929 100%);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-family: 'Georgia', serif;
+        overflow: hidden;
+}
+
+.wrapper {
+        text-align: center;
+        transform: translateY(100vh);
+        animation: riseUp 2s 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+}
+
+@keyframes riseUp {
+        to {
+                transform: translateY(0);
+        }
+}
+
+/* Animacja wyrastania łodyg */
+@keyframes growStem {
+        from {
+                height: 0;
+        }
+
+        to {
+                height: 400px;
+        }
+}
+
+/* Animacja pojawiania się liści */
+@keyframes fadeInLeaves {
+        from {
+                opacity: 0;
+                transform: scale(0.3);
+        }
+
+        to {
+                opacity: 1;
+                transform: scale(1);
+        }
+}
+
+/* Indywidualne opóźnienia dla każdej łodygi */
+.lodyga:nth-of-type(1) {
+        animation-delay: 0.6s;
+}
+
+.lodyga:nth-of-type(2) {
+        animation-delay: 0.75s;
+}
+
+.lodyga:nth-of-type(3) {
+        animation-delay: 0.9s;
+}
+
+.lodyga:nth-of-type(4) {
+        animation-delay: 1.05s;
+}
+
+.lodyga:nth-of-type(5) {
+        animation-delay: 1.2s;
+}
+
+.lodyga:nth-of-type(6) {
+        animation-delay: 1.35s;
+}
+
+.bukiet {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        margin: 0 auto;
+}
+
+.lodyga {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 14px;
+        height: 400px;
+        /* Bardziej żywy gradient z wieloma kolorami */
+        background:
+                linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 25%, transparent 50%, rgba(0, 0, 0, 0.1) 75%, transparent 100%),
+                linear-gradient(to top, #2d5a38, #4a7a56, #5a8a66, #6aa876, #7aba86);
+        /* Grubsza ramka i bardziej wyraziste cienie */
+        border: 2px solid #1f4a2a;
+        box-shadow:
+                inset 3px 0 5px rgba(0, 0, 0, 0.3),
+                inset -2px 0 4px rgba(255, 255, 255, 0.2),
+                3px 0 8px rgba(0, 0, 0, 0.25);
+        transform-origin: bottom center;
+        border-radius: 5px;
+        z-index: 1;
+        /* Animacja wyrastania łodygi */
+        height: 0;
+        animation: growStem 1.2s cubic-bezier(0.3, 0, 0.3, 1) forwards;
+}
+
+/* Dodajemy małe listki do łodyg */
+.lodyga::before {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 15px;
+        background: linear-gradient(to right, #5a8a66, #6aa876);
+        border: 1px solid #4a7a56;
+        top: 220px;
+        left: -15px;
+        border-radius: 50% 0;
+        transform: rotate(-30deg);
+        z-index: -1;
+}
+
+/* --- Większe, efektowne liście jako część kompozycji bukietu --- */
+.lodyga::before,
+.lodyga::after {
+        content: '';
+        position: absolute;
+        background:
+                radial-gradient(ellipse at 35% 25%, rgba(255, 255, 255, 0.6) 0%, transparent 60%),
+                linear-gradient(135deg, #2d5a38 0%, #4a7a56 20%, #5a8a66 40%, #6aa876 70%, #7aba86 100%);
+        border: 1px solid #2d5a38;
+        /* Prawdziwy kształt liścia - wąski u podstawy, szeroki w środku, ostry czubek */
+        border-radius: 0% 50% 50% 50% / 0% 90% 90% 10%;
+        box-shadow:
+                0 4px 8px rgba(0, 0, 0, 0.3),
+                inset 3px 3px 6px rgba(255, 255, 255, 0.5),
+                inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+        z-index: 0;
+        /* Ukrywamy liście na początku */
+        opacity: 0;
+        animation: fadeInLeaves 1s 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        /* Delikatne zawinięcie dla 3D efektu */
+        transform-style: preserve-3d;
+}
+
+/* Łodyga 1 (skrajna lewa) - duże liście kompozycyjne */
+.lodyga:nth-of-type(1)::before {
+        width: 45px;
+        height: 32px;
+        top: 250px;
+        left: -30px;
+        transform: rotate(-55deg) perspective(100px) rotateY(15deg);
+        border-radius: 0% 60% 80% 40% / 10% 85% 85% 15%;
+}
+
+.lodyga:nth-of-type(1)::after {
+        width: 38px;
+        height: 28px;
+        top: 180px;
+        left: -25px;
+        transform: rotate(-35deg) perspective(100px) rotateY(-10deg);
+        border-radius: 5% 55% 75% 45% / 15% 80% 80% 20%;
+}
+
+/* Łodyga 2 - asymetryczne liście */
+.lodyga:nth-of-type(2)::before {
+        width: 42px;
+        height: 30px;
+        top: 270px;
+        left: -28px;
+        transform: rotate(-50deg);
+        border-radius: 18% 82% 68% 42% / 38% 62% 78% 28%;
+}
+
+.lodyga:nth-of-type(2)::after {
+        width: 35px;
+        height: 25px;
+        top: 200px;
+        left: 18px;
+        transform: rotate(55deg) scaleX(-1);
+        border-radius: 22% 78% 72% 38% / 42% 58% 82% 32%;
+}
+
+/* Łodyga 3 (środek lewa) - duże liście do kompozycji */
+.lodyga:nth-of-type(3)::before {
+        width: 48px;
+        height: 34px;
+        top: 260px;
+        left: -32px;
+        transform: rotate(-45deg);
+}
+
+.lodyga:nth-of-type(3)::after {
+        width: 40px;
+        height: 29px;
+        top: 190px;
+        left: 20px;
+        transform: rotate(48deg) scaleX(-1);
+}
+
+/* Łodyga 4 (środek prawa) - też duże liście */
+.lodyga:nth-of-type(4)::before {
+        width: 41px;
+        height: 30px;
+        top: 275px;
+        left: 16px;
+        transform: rotate(42deg) scaleX(-1);
+}
+
+.lodyga:nth-of-type(4)::after {
+        width: 36px;
+        height: 26px;
+        top: 205px;
+        left: -20px;
+        transform: rotate(-40deg);
+}
+
+/* Łodyga 5 - asymetryczne duże liście */
+.lodyga:nth-of-type(5)::before {
+        width: 39px;
+        height: 28px;
+        top: 285px;
+        left: 18px;
+        transform: rotate(47deg) scaleX(-1);
+}
+
+.lodyga:nth-of-type(5)::after {
+        width: 33px;
+        height: 24px;
+        top: 215px;
+        left: -18px;
+        transform: rotate(-50deg);
+}
+
+/* Łodyga 6 (skrajna prawa) - największe liście kompozycyjne */
+.lodyga:nth-of-type(6)::before {
+        width: 46px;
+        height: 33px;
+        top: 265px;
+        left: 20px;
+        transform: rotate(52deg) scaleX(-1);
+}
+
+.lodyga:nth-of-type(6)::after {
+        width: 37px;
+        height: 27px;
+        top: 195px;
+        left: -22px;
+        transform: rotate(-47deg);
+}
+
+
+/* Dodajemy wygięcie dla lewych łodyg */
+.lodyga-lewa {
+        border-radius: 60% 0 0 0;
+}
+
+/* Dodajemy wygięcie dla lewych łodyg */
+.lodyga-lewa {
+        border-radius: 60% 0 0 0;
+}
+
+/* Dodajemy wygięcie dla prawych łodyg */
+.lodyga-prawa {
+        border-radius: 0 60% 0 0;
+}
+
+.wstazka {
+        position: absolute;
+        bottom: 50px;
+        left: 51%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 30px;
+        background: #ff69b4;
+        border-radius: 4px;
+        border: 2px solid #c1477a;
+        /* Ciemniejszy outline */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        /* Dodatkowy cień */
+
+        z-index: 15;
+}
+
+.wstazka::before,
+.wstazka::after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 50px;
+        background: #ff69b4;
+        border: 2px solid #c1477a;
+        /* Ciemniejszy outline dla końcówek */
+        top: 8px;
+
+        z-index: 1;
+}
+
+.wstazka-lewy {
+        position: absolute;
+        width: 25px;
+        height: 40px;
+        background: #ff69b4;
+        border: 2px solid #c1477a;
+        top: 0px;
+        left: 0px;
+        transform: rotate(70deg);
+
+        z-index: 14;
+        border-radius: 2px;
+}
+
+.wstazka-prawy {
+        position: absolute;
+        width: 25px;
+        height: 40px;
+        background: #ff69b4;
+        border: 2px solid #c1477a;
+        top: 0px;
+        right: 0px;
+        transform: rotate(-70deg);
+
+        z-index: 14;
+        border-radius: 2px;
+}
+
+.wstazka::before {
+        left: 16px;
+        transform: rotate(35deg);
+
+        z-index: 16;
+}
+
+.wstazka::after {
+        right: 16px;
+        transform: rotate(-35deg);
+
+        z-index: 16;
+}
+
+.wstazka-kolko {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(45deg, #d14a85, #ff69b4, #d14a85);
+        border: 2px solid #a03d6b;
+        border-radius: 50%;
+        box-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.3),
+                inset 0 1px 2px rgba(255, 255, 255, 0.3);
+
+        z-index: 20;
+}
+
+.kwiaty {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+}
+
+.kwiat {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        opacity: 0;
+        animation: bloom 1.5s 2s forwards;
+}
+
+@keyframes bloom {
+        from {
+                opacity: 0;
+                transform: scale(0.5);
+        }
+
+        to {
+                opacity: 1;
+                transform: scale(1);
+        }
+}
+
+.lilia::before,
+.lilia::after,
+.lilia div,
+.lilia span {
+        content: '';
+        position: absolute;
+        width: 25px;
+        height: 70px;
+        background: linear-gradient(to bottom, #f8d7e6, #f4a8c9);
+        border-radius: 50% 50% 0 0;
+        transform-origin: bottom center;
+        border: 1px solid #d188a5;
+        box-shadow: inset 0px -5px 10px rgba(0, 0, 0, 0.05);
+}
+
+.lilia::before {
+        transform: rotate(-30deg);
+        left: 22px;
+        top: 3px;
+}
+
+.lilia div {
+        transform: rotate(0deg);
+        left: 20px;
+        z-index: 1;
+        width: 30px;
+        background: linear-gradient(to bottom, #f6cddc, #f298b9);
+        position: relative;
+}
+
+.lilia div::before,
+.lilia div::after {
+        content: '';
+        position: absolute;
+        width: 3px;
+        height: 25px;
+        background-color: #ffeb3b;
+        border-top: 5px solid #c7a800;
+        border-radius: 2px;
+        bottom: 0;
+        left: 13px;
+        transform-origin: bottom center;
+        z-index: 3;
+}
+
+.lilia span {
+        transform: rotate(30deg);
+        left: 3px;
+        top: 3px;
+}
+
+.lilia div::before {
+        transform: rotate(-15deg);
+}
+
+.lilia div::after {
+        transform: rotate(15deg);
+}
+
+.lilia::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 10px;
+        width: 50px;
+        height: 30px;
+        background: linear-gradient(to top, #f4a8c9 30%, rgba(244, 168, 201, 0));
+        border-radius: 0 0 20px 20px;
+        border: none;
+        z-index: 2;
+}
+
+.lilia-1 {
+        left: 110px;
+        top: 70px;
+        transform: scale(1.1) rotate(-5deg);
+        animation: bloom 1.5s 2s forwards;
+}
+
+.lilia-2 {
+        left: 170px;
+        top: 70px;
+        transform: scale(1.1) rotate(8deg);
+        animation: bloom 1.5s 2.2s forwards;
+}
+
+.lilia-3 {
+        left: 240px;
+        top: 85px;
+        transform: scale(1) rotate(-10deg);
+        animation: bloom 1.5s 2.4s forwards;
+}
+
+.lilia-4 {
+        left: 60px;
+        top: 90px;
+        transform: scale(1.05) rotate(12deg);
+        animation: bloom 1.5s 2.6s forwards;
+}
+
+.lilia-5 {
+        left: 270px;
+        top: 90px;
+        transform: scale(0.95) rotate(-15deg);
+        animation: bloom 1.5s 2.8s forwards;
+}
+
+.lilia-6 {
+        left: 200px;
+        top: -10px;
+        transform: scale(1.0) rotate(20deg);
+        animation: bloom 1.5s 3.0s forwards;
+}
+
+.lilia-7 {
+        left: 30px;
+        top: -11px;
+        transform: scale(0.9) rotate(-25deg);
+        animation: bloom 1.5s 3.1s forwards;
+}
+
+.lilia-9 {
+        left: 90px;
+        top: -10px;
+        transform: scale(0.8) rotate(-40deg);
+        animation: bloom 1.5s 3.5s forwards;
+}
+
+.lilia-10 {
+        left: 260px;
+        top: -20px;
+        transform: scale(1.0) rotate(45deg);
+        animation: bloom 1.5s 3.7s forwards;
+}
+
+.lilia-11 {
+        left: 150px;
+        top: -15px;
+        transform: scale(0.95) rotate(-50deg);
+        animation: bloom 1.5s 3.9s forwards;
+}
+
+.lilia-12 {
+        left: 320px;
+        top: -15px;
+        transform: scale(0.85) rotate(35deg);
+        animation: bloom 1.5s 4.1s forwards;
+}
+
+.gozdzik-1 {
+        left: 150px;
+        top: 130px;
+        transform: scale(0.9) rotate(-8deg);
+        animation: bloom 1.5s 2.8s forwards;
+}
+
+.gozdzik-2 {
+        left: 250px;
+        top: 135px;
+        transform: scale(0.95) rotate(15deg);
+        animation: bloom 1.5s 3s forwards;
+}
+
+.gozdzik-3 {
+        left: 100px;
+        top: 120px;
+        transform: scale(0.9) rotate(5deg);
+        animation: bloom 1.5s 3.2s forwards;
+}
+
+.gozdzik-4 {
+        left: 180px;
+        top: 30px;
+        transform: scale(0.8) rotate(-12deg);
+        animation: bloom 1.5s 3.4s forwards;
+}
+
+.gozdzik-5 {
+        left: 80px;
+        top: 40px;
+        transform: scale(0.9) rotate(25deg);
+        animation: bloom 1.5s 3.6s forwards;
+}
+
+.gozdzik-6 {
+        left: 250px;
+        top: 35px;
+        transform: scale(0.85) rotate(-20deg);
+        animation: bloom 1.5s 3.8s forwards;
+}
+
+.gozdzik-7 {
+        left: 120px;
+        top: 30px;
+        transform: scale(0.8) rotate(10deg);
+        animation: bloom 1.5s 4.0s forwards;
+}
+
+.gozdzik-8 {
+        left: 200px;
+        top: 25px;
+        transform: scale(0.9) rotate(-30deg);
+        animation: bloom 1.5s 4.2s forwards;
+}
+
+.gozdzik-9 {
+        left: 30px;
+        top: 45px;
+        transform: scale(0.75) rotate(40deg);
+        animation: bloom 1.5s 4.4s forwards;
+}
+
+.gozdzik-10 {
+        left: 300px;
+        top: 45px;
+        transform: scale(0.85) rotate(-15deg);
+        animation: bloom 1.5s 4.6s forwards;
+}
+
+.gozdzik-11 {
+        left: 70px;
+        top: 135px;
+        transform: scale(0.8) rotate(20deg);
+        animation: bloom 1.5s 4.8s forwards;
+}
+
+.gozdzik-12 {
+        left: 210px;
+        top: 135px;
+        transform: scale(0.7) rotate(-25deg);
+        animation: bloom 1.5s 5.0s forwards;
+}
+
+/* Goździki na pierwszym planie - przed liliami */
+.gozdzik-1,
+.gozdzik-2,
+.gozdzik-3,
+.gozdzik-4 {
+        z-index: 5;
+}
+
+/* Nowe goździki też na pierwszym planie */
+.gozdzik-5,
+.gozdzik-6,
+.gozdzik-7,
+.gozdzik-8,
+.gozdzik-9,
+.gozdzik-10,
+.gozdzik-11,
+.gozdzik-12 {
+        z-index: 5;
+}
+
+.gozdzik div,
+.gozdzik::before,
+.gozdzik::after,
+.gozdzik div::before,
+.gozdzik div::after {
+        content: '';
+        position: absolute;
+        width: 42px;
+        height: 42px;
+        background: radial-gradient(circle, #ffdde1, #ff99ac);
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.2), inset 0 0 4px #ff8fab;
+        border: none;
+        border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+}
+
+.gozdzik-bialy div,
+.gozdzik-bialy::before,
+.gozdzik-bialy::after,
+.gozdzik-bialy div::before,
+.gozdzik-bialy div::after {
+        background: radial-gradient(circle, #ffffff, #e9e9e9);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1), inset 0 0 4px #d0d0d0;
+}
+
+/* Back petals */
+.gozdzik::before {
+        top: 20px;
+        left: 5px;
+        transform: rotate(-25deg);
+        border-radius: 40% 60% 50% 50% / 40% 50% 50% 60%;
+}
+
+.gozdzik::after {
+        top: 20px;
+        left: 35px;
+        transform: rotate(25deg);
+        border-radius: 60% 40% 50% 50% / 40% 50% 50% 60%;
+}
+
+/* Middle petal - the div itself */
+.gozdzik div {
+        top: 10px;
+        left: 20px;
+        z-index: 1;
+        border-radius: 50% 50% 40% 60% / 60% 60% 40% 40%;
+}
+
+/* Front petals */
+.gozdzik div::before {
+        top: 5px;
+        left: -10px;
+        transform: rotate(40deg);
+        z-index: 2;
+        width: 40px;
+        height: 40px;
+        border-radius: 50% 50% 50% 50% / 40% 60% 40% 60%;
+}
+
+.gozdzik div::after {
+        top: 5px;
+        left: 10px;
+        transform: rotate(-35deg);
+        z-index: 2;
+        width: 40px;
+        height: 40px;
+        border-radius: 50% 50% 50% 50% / 60% 40% 60% 40%;
+}
+
+
+.message {
+        margin-top: 20px;
+        color: #333;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        animation: fadeIn 2s 3.5s forwards;
+}
+
+.message h1 {
+        font-size: 1.8em;
+        margin: 0;
+}
+
+.message p {
+        font-size: 1em;
+        margin: 5px 0 0;
+}
+
+@keyframes fadeIn {
+        to {
+                opacity: 1;
+        }
+}
+
+/* Lilie z wyższym z-index dla tych co są niżej (większe top) */
+.lilia-1 {
+        z-index: 3;
+}
+
+/* top: 90px */
+.lilia-2 {
+        z-index: 3;
+}
+
+/* top: 90px */
+.lilia-3 {
+        z-index: 3;
+}
+
+/* top: 105px */
+.lilia-4 {
+        z-index: 3;
+}
+
+/* top: 110px */
+.lilia-5 {
+        z-index: 3;
+}
+
+/* top: 110px */
+
+/* Lilie które są bardzo wysoko - za goździkami */
+.lilia-6 {
+        z-index: 2;
+}
+
+/* top: -10px */
+.lilia-7 {
+        z-index: 2;
+}
+
+/* top: -11px */
+.lilia-9 {
+        z-index: 2;
+}
+
+/* top: -10px */
+.lilia-10 {
+        z-index: 2;
+}
+
+/* top: -20px */
+.lilia-11 {
+        z-index: 2;
+}
+
+/* top: -15px */
+.lilia-12 {
+        z-index: 2;
+}
+
+/* top: -15px */
+
+/* Goździki z różnymi z-index - wyższe dla tych co są niżej */
+.gozdzik-1 {
+        z-index: 6;
+}
+
+/* top: 150px */
+.gozdzik-2 {
+        z-index: 6;
+}
+
+/* top: 180px */
+.gozdzik-3 {
+        z-index: 6;
+}
+
+/* top: 150px */
+.gozdzik-11 {
+        z-index: 6;
+}
+
+/* top: 200px */
+.gozdzik-12 {
+        z-index: 6;
+}
+
+/* top: 210px */
+
+/* Goździki które są wyżej - niższy z-index */
+.gozdzik-4 {
+        z-index: 2;
+}
+
+/* top: 30px */
+.gozdzik-5 {
+        z-index: 2;
+}
+
+/* top: 40px */
+.gozdzik-6 {
+        z-index: 2;
+}
+
+/* top: 35px */
+.gozdzik-7 {
+        z-index: 2;
+}
+
+/* top: 30px */
+.gozdzik-8 {
+        z-index: 2;
+}
+
+/* top: 25px */
+.gozdzik-9 {
+        z-index: 2;
+}
+
+/* top: 40px */
+.gozdzik-10 {
+        z-index: 2;
+}
+
+/* top: 31px */
